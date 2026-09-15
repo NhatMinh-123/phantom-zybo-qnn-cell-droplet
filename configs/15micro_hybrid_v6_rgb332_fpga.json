@@ -1,0 +1,43 @@
+{
+  "architecture": "roi_a_qnn_plus_roi_b_rgb332_cb_luma_classical_plus_temporal_and_on_fpga",
+  "rois": {
+    "qnn": {
+      "reference_width": 1280,
+      "reference_height": 800,
+      "x": 628,
+      "y": 410,
+      "width": 120,
+      "height": 120,
+      "gate_fraction": 0.50
+    },
+    "classical": {
+      "reference_width": 1280,
+      "reference_height": 800,
+      "x": 820,
+      "y": 410,
+      "width": 120,
+      "height": 120,
+      "gate_fraction": 0.50
+    }
+  },
+  "fpga_contract": {
+    "input_order": ["qnn_roi_a_uint8_96x96", "classical_roi_b_rgb332_96x96"],
+    "input_bytes": 18432,
+    "classical_color_transform": {
+      "packing": "RRRGGGBB",
+      "droplet_plane": "clip(128 + 42*B2 - 6*R3 - 12*G3, 0, 255)",
+      "cell_plane": "clip(9*R3 + 18*G3 + 21*B2, 0, 255)",
+      "droplet_score_threshold": 500
+    },
+    "status_record_magic": "HYFF",
+    "fusion": "same_class_temporal_AND",
+    "minimum_delay_frames": 1,
+    "maximum_delay_frames": 60,
+    "nominal_delay_frames": 12,
+    "maximum_y_distance_working_pixels": 29
+  },
+  "truth_boundary": {
+    "fpga": "QNN ROI A, RGB332-to-Cb/luma conversion, integer classical ROI B, temporal fusion and cumulative counters",
+    "host": "video decode, two ROI crops, RGB332 transport packing, UART logging and rendering only"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "image_size": 640,
+  "nms_iou": 0.5,
+  "warmup_frames": 8,
+  "confidence": {
+    "cell": 0.55,
+    "droplet": 0.54
+  },
+  "preprocess": {
+    "mode": "fixed_roi_grayscale_resize",
+    "content_width": 640,
+    "content_height": 640
+  },
+  "roi": {
+    "reference_width": 1280,
+    "reference_height": 800,
+    "x": 628,
+    "y": 410,
+    "width": 120,
+    "height": 120,
+    "count_line_fraction": 0.65
+  },
+  "tracking": {
+    "direction": "left_to_right",
+    "minimum_hits": 3,
+    "max_misses": 6,
+    "max_center_distance": 0.22,
+    "count_hysteresis": 0.04
+  },
+  "calibration": {
+    "parent_roi": "configs/15micro_qnn_roi240_center_v2.json",
+    "policy": "center-preserving 240-to-120 source crop",
+    "source_area_reduction_percent": 75.0,
+    "qnn_input_unchanged": "192x192"
+  }
+}

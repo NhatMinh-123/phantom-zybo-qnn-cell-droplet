@@ -1,0 +1,31 @@
+.venv*/
+__pycache__/
+*.py[cod]
+.Xil/
+.hbs/
+xsim.dir/
+runs/
+vivado*.jou
+vivado*.log
+webtalk*.jou
+webtalk*.log
+
+# Generated QAT and FINN artifacts
+models/qnn_cell_droplet/*.pt
+reports/qnn_cell_droplet/*.csv
+reports/qnn_cell_droplet/*.json
+exports/qnn_cell_droplet/*.onnx
+finn_build/
+
+# Local-only camera data, SDK installers, weights, videos and generated images
+*.zip
+*.pt
+*.mp4
+*.avi
+*.mov
+*.png
+*.jpg
+.venv*/
+SDK 3.8.804.66/
+reports/ethernet_live_20260910/
+final_results/phantom_camera_qnn_live/benchmark_20260910/

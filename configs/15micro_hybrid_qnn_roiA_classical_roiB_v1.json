@@ -1,0 +1,77 @@
+{
+  "image_size": 640,
+  "architecture": "upstream_fpga_qnn_plus_downstream_classical_temporal_and",
+  "rois": {
+    "qnn": {
+      "reference_width": 1280,
+      "reference_height": 800,
+      "x": 628,
+      "y": 410,
+      "width": 120,
+      "height": 120,
+      "line_fraction": 0.50
+    },
+    "classical": {
+      "reference_width": 1280,
+      "reference_height": 800,
+      "x": 820,
+      "y": 410,
+      "width": 120,
+      "height": 120,
+      "line_fraction": 0.50
+    }
+  },
+  "qnn_tracking": {
+    "direction": "left_to_right",
+    "minimum_hits": {"cell": 3, "droplet": 2},
+    "max_misses": {"cell": 4, "droplet": 6},
+    "max_center_distance": {"cell": 0.24, "droplet": 0.35},
+    "count_hysteresis": 0.035,
+    "reverse_tolerance": 0.04,
+    "edge_margin": 0.04,
+    "maximum_prediction_frames": 4
+  },
+  "classical_tracking": {
+    "direction": "left_to_right",
+    "minimum_hits": {"cell": 2, "droplet": 2},
+    "max_misses": {"cell": 3, "droplet": 4},
+    "max_center_distance": {"cell": 0.20, "droplet": 0.42},
+    "count_hysteresis": 0.025,
+    "reverse_tolerance": 0.08,
+    "edge_margin": 0.04,
+    "maximum_prediction_frames": 3
+  },
+  "classical_detector": {
+    "working_size": 96,
+    "hough_dp": 1.0,
+    "hough_min_distance": 34,
+    "hough_param1": 65.0,
+    "hough_param2": 18.0,
+    "droplet_min_radius": 20,
+    "droplet_max_radius": 53,
+    "droplet_min_ring_score": 0.34,
+    "cell": {
+      "response_threshold": 40,
+      "local_contrast_threshold": 12,
+      "minimum_distance": 4,
+      "box_size": 8,
+      "border": 2,
+      "maximum_candidates": 24,
+      "droplet_margin": 0.06
+    }
+  },
+  "fusion": {
+    "operator": "AND",
+    "minimum_delay_frames": 1,
+    "maximum_delay_frames": 60,
+    "nominal_delay_frames": 12.0,
+    "maximum_cross_axis_distance_fraction": 0.30,
+    "count_once_per_branch_track": true,
+    "final_count_owner": "cross_branch_consensus_only"
+  },
+  "truth_boundary": {
+    "reference": "QNN executes on Arty S7-25; downstream classical detector, fusion and count execute on PC for calibration",
+    "target": "QNN ROI A, FPGA-friendly classical ROI B, temporal AND and counters execute in FPGA"
+  }
+}
+

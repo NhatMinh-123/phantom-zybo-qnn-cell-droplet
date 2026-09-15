@@ -1,0 +1,364 @@
+{
+  "schema_version": 1,
+  "name": "tiny_detector_96x96_w4a6_rawhead_arty_s7_25",
+  "model": {
+    "checkpoint": "models/15micro/qnn_w4a6_96_roi120_v1/last.pt",
+    "checkpoint_sha256": "fcc2431b697b2b6dead78469f069e29ae04a822259cdce467e3ce229be77d082",
+    "qonnx": "exports/15micro_qnn_w4a6_96_roi120_v1/tiny_detector_96x96_w4a6_rawhead.onnx",
+    "qonnx_sha256": "5d9bd3565cfab32424230fff77c083b428413474827796cb1389e53518c914e1",
+    "raw_head_qonnx": "exports/15micro_qnn_w4a6_96_roi120_v1/tiny_detector_96x96_w4a6_rawhead.onnx",
+    "raw_head_qonnx_sha256": "5d9bd3565cfab32424230fff77c083b428413474827796cb1389e53518c914e1",
+    "checkpoint_epoch": 29,
+    "configuration": {
+      "input_size": 256,
+      "input_width": 96,
+      "input_height": 96,
+      "num_classes": 2,
+      "class_names": [
+        "cell",
+        "droplet"
+      ],
+      "channels": [
+        12,
+        16,
+        24,
+        24
+      ],
+      "weight_bits": 4,
+      "activation_bits": 6,
+      "input_bits": 8,
+      "output_bits": 8,
+      "downsample": 4,
+      "downsample_width": 0,
+      "downsample_height": 0,
+      "slots_per_class": [
+        2,
+        1
+      ],
+      "anchors": [
+        [
+          0.07406667,
+          0.07446667
+        ],
+        [
+          0.42776667,
+          0.4926
+        ]
+      ],
+      "grid_size": 24
+    }
+  },
+  "preprocessing": {
+    "color_mode": "grayscale_L",
+    "resize": {
+      "width": 96,
+      "height": 96,
+      "method": "PIL_BILINEAR"
+    },
+    "normalization": "pixel_uint8 / 255.0",
+    "input_quantization": {
+      "dtype": "UINT8",
+      "bits": 8,
+      "scale": 0.003730585565790534,
+      "zero_point": 0,
+      "formula": "q=clip(round((pixel/255)/scale),0,255)"
+    }
+  },
+  "fpga_core": {
+    "device": "xc7s25csga324-1",
+    "clock_hz": 100000000,
+    "output_kind": "raw_accumulator",
+    "input_stream": {
+      "shape_nhwc": [
+        1,
+        96,
+        96,
+        1
+      ],
+      "dtype": "UINT8",
+      "axis_tdata_bits": 8,
+      "beats_per_frame": 9216,
+      "bytes_per_frame": 9216,
+      "tlast": false
+    },
+    "output_stream": {
+      "shape_nhwc": [
+        1,
+        24,
+        24,
+        15
+      ],
+      "dtype": "INT16",
+      "axis_tdata_bits": 24,
+      "beats_per_frame": 8640,
+      "bytes_per_frame": 25920,
+      "tlast": false,
+      "serialized_byte_order": "little_endian"
+    },
+    "frame_boundary": "count AXI handshakes; the core does not emit TLAST",
+    "raw_accumulator": {
+      "dtype": "INT16",
+      "bits": 16,
+      "scale": 0.00026665400492136004,
+      "feature_scale": 0.09302002191543579,
+      "head_weight_scale": 0.002866630209609866,
+      "bias_per_channel": [
+        -2.893372058868408,
+        0.02600105106830597,
+        -0.03131551668047905,
+        -0.00042251983541063964,
+        0.02012183703482151,
+        -3.0088512897491455,
+        0.0025486259255558252,
+        0.013195274397730827,
+        -0.06894451379776001,
+        -0.019018692895770073,
+        -2.832301616668701,
+        0.007151557598263025,
+        0.022967534139752388,
+        -0.001592477085068822,
+        0.029702477157115936
+      ],
+      "formula": "raw_float=accumulator*scale+bias[channel]"
+    }
+  },
+  "postprocessing": {
+    "output_requantization": {
+      "dtype": "INT8",
+      "bits": 8,
+      "signed": true,
+      "scale": 0.030286800116300583,
+      "zero_point": 0,
+      "formula": "q=clip(round(raw_float/scale),-128,127); logits=q*scale"
+    },
+    "tensor_conversion": "FPGA NHWC -> decoder NCHW",
+    "decoder": {
+      "class_names": [
+        "cell",
+        "droplet"
+      ],
+      "confidence_thresholds": [
+        0.96,
+        0.88
+      ],
+      "anchors": [
+        [
+          0.07406667,
+          0.07446667
+        ],
+        [
+          0.42776667,
+          0.4926
+        ]
+      ],
+      "slots_per_class": [
+        2,
+        1
+      ],
+      "nms_iou": [
+        0.35,
+        0.1
+      ],
+      "box_constraints": [
+        {
+          "center_y_min": 0.0,
+          "center_y_max": 0.9344999957084655
+        },
+        {
+          "center_y_min": 0.02894166678190231,
+          "center_y_max": 0.9443583059310913
+        }
+      ],
+      "box_calibration": [
+        {
+          "width_scale": 1.0,
+          "height_scale": 1.0,
+          "center_x_offset": 0.0,
+          "center_y_offset": 0.0
+        },
+        {
+          "width_scale": 1.3,
+          "height_scale": 1.0,
+          "center_x_offset": 0.0,
+          "center_y_offset": 0.0
+        }
+      ],
+      "pre_nms_topk": 100,
+      "max_detections": 200
+    }
+  },
+  "reference_evaluation": {
+    "source": "reports/15micro_qnn_roi120_v1/evaluation_balanced_epoch29/postprocessed_evaluation.json",
+    "validation": {
+      "thresholds": {
+        "cell": 0.96,
+        "droplet": 0.88
+      },
+      "precision": 0.7149321266968326,
+      "recall": 0.7669902912621359,
+      "f1": 0.7400468384074942,
+      "classes": {
+        "cell": {
+          "threshold": 0.96,
+          "true_positive": 19,
+          "false_positive": 20,
+          "false_negative": 13,
+          "precision": 0.48717948717948717,
+          "recall": 0.59375,
+          "f1": 0.5352112676056338
+        },
+        "droplet": {
+          "threshold": 0.88,
+          "true_positive": 139,
+          "false_positive": 43,
+          "false_negative": 35,
+          "precision": 0.7637362637362637,
+          "recall": 0.7988505747126436,
+          "f1": 0.7808988764044944
+        }
+      },
+      "macro_f1": 0.6580550720050641
+    },
+    "test": {
+      "thresholds": {
+        "cell": 0.96,
+        "droplet": 0.88
+      },
+      "precision": 0.8865740740740741,
+      "recall": 0.6227642276422765,
+      "f1": 0.731614135625597,
+      "classes": {
+        "cell": {
+          "threshold": 0.96,
+          "true_positive": 177,
+          "false_positive": 40,
+          "false_negative": 193,
+          "precision": 0.815668202764977,
+          "recall": 0.4783783783783784,
+          "f1": 0.6030664395229982
+        },
+        "droplet": {
+          "threshold": 0.88,
+          "true_positive": 206,
+          "false_positive": 9,
+          "false_negative": 39,
+          "precision": 0.958139534883721,
+          "recall": 0.8408163265306122,
+          "f1": 0.8956521739130435
+        }
+      },
+      "macro_f1": 0.7493593067180209
+    },
+    "postprocess_calibration": {
+      "checkpoint": "E:\\fpga\\models\\15micro\\qnn_w4a6_96_roi120_v1\\last.pt",
+      "selected_on": "validation",
+      "selection_policy": "maximize per-class validation F1 after fixed NMS, ROI constraints, and box calibration",
+      "selected": {
+        "confidence_thresholds": {
+          "cell": 0.96,
+          "droplet": 0.88
+        },
+        "nms_iou": {
+          "cell": 0.35,
+          "droplet": 0.1
+        },
+        "box_constraints": {
+          "cell": {
+            "center_y_min": 0.0,
+            "center_y_max": 0.9344999957084655
+          },
+          "droplet": {
+            "center_y_min": 0.02894166678190231,
+            "center_y_max": 0.9443583059310913
+          }
+        },
+        "box_calibration": {
+          "cell": {
+            "width_scale": 1.0,
+            "height_scale": 1.0,
+            "center_x_offset": 0.0,
+            "center_y_offset": 0.0
+          },
+          "droplet": {
+            "width_scale": 1.3,
+            "height_scale": 1.0,
+            "center_x_offset": 0.0,
+            "center_y_offset": 0.0
+          }
+        }
+      }
+    },
+    "note": "Accuracy of W4A6 checkpoint; board equivalence must be verified separately."
+  },
+  "synthesis": {
+    "source": "finn_build/15micro_qnn96_roi120_windows_bridge/stitched_windows/ooc_reports/synthesis_summary.json",
+    "vivado": {
+      "stage": "post_synthesis_unplaced",
+      "timing": {
+        "clock": "ap_clk",
+        "period_ns": 10.0,
+        "frequency_mhz": 100.0,
+        "wns_ns": 1.727,
+        "tns_ns": 0.0,
+        "whs_ns": 0.172,
+        "ths_ns": 0.0,
+        "constraints_met": true,
+        "stage": "post_synthesis_unplaced"
+      },
+      "utilization": {
+        "slice_luts": {
+          "used": 8996,
+          "available": 14600,
+          "utilization_percent": 61.62
+        },
+        "lut_logic": {
+          "used": 8436,
+          "available": 14600,
+          "utilization_percent": 57.78
+        },
+        "lut_memory": {
+          "used": 560,
+          "available": 5000,
+          "utilization_percent": 11.2
+        },
+        "slice_registers": {
+          "used": 10512,
+          "available": 29200,
+          "utilization_percent": 36.0
+        },
+        "bram_tiles": {
+          "used": 3,
+          "available": 45,
+          "utilization_percent": 6.67
+        },
+        "ramb36": {
+          "used": 1,
+          "available": 45,
+          "utilization_percent": 2.22
+        },
+        "ramb18": {
+          "used": 4,
+          "available": 90,
+          "utilization_percent": 4.44
+        },
+        "dsps": {
+          "used": 8,
+          "available": 80,
+          "utilization_percent": 10.0
+        }
+      }
+    },
+    "finn_estimate": {
+      "critical_path_cycles": 3749571,
+      "max_cycles": 995328,
+      "max_cycles_node_name": "MVAU_hls_1",
+      "estimated_throughput_fps": 100.46939300411523,
+      "estimated_latency_ns": 37495710.0
+    },
+    "caveats": [
+      "Vivado timing is post-synthesis and unplaced; routed timing is still required.",
+      "FINN throughput and latency values are estimates, not measured board results.",
+      "Board wrapper, clocking, UART/camera transport, and post-processing are excluded."
+    ]
+  }
+}

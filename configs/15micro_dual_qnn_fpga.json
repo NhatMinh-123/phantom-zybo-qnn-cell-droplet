@@ -1,0 +1,54 @@
+{
+  "architecture": "roi1_candidate_then_roi2_confirm_single_count",
+  "rois": {
+    "left": {
+      "reference_width": 1280,
+      "reference_height": 800,
+      "x": 628,
+      "y": 410,
+      "width": 120,
+      "height": 120,
+      "line_fraction": 0.55
+    },
+    "right": {
+      "reference_width": 1280,
+      "reference_height": 800,
+      "x": 748,
+      "y": 410,
+      "width": 120,
+      "height": 120,
+      "line_fraction": 0.55
+    }
+  },
+  "fpga_contract": {
+    "input": "one uint8 grayscale 96x96 QNN ROI per UART request",
+    "requests_per_source_frame": 2,
+    "decision": "ROI 1 creates a pending candidate; ROI 2 confirms the same object; one matched A-to-B event increments the class counter exactly once"
+  },
+  "tracking": {
+    "direction": "left_to_right",
+    "minimum_hits": {
+      "cell": 3,
+      "droplet": 2
+    },
+    "max_misses": {
+      "cell": 8,
+      "droplet": 10
+    },
+    "max_center_distance": {
+      "cell": 0.24,
+      "droplet": 0.35
+    },
+    "count_hysteresis": 0.035,
+    "reverse_tolerance": 0.04,
+    "edge_margin": 0.04,
+    "maximum_prediction_frames": 10
+  },
+  "cross_roi_verification": {
+    "minimum_delay_frames": 4,
+    "maximum_delay_frames": 60,
+    "maximum_cross_axis_distance_fraction": 0.25,
+    "required_for_count": true,
+    "preserve_order": true
+  }
+}

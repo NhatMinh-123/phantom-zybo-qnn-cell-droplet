@@ -1,0 +1,38 @@
+{
+  "metadata": "E:\\fpga\\exports\\15micro_qnn_w4a6_96_roi120_v1\\tiny_detector_96x96_w4a6_rawhead.json",
+  "postprocess": "E:\\fpga\\reports\\15micro_qnn_roi120_v1\\postprocess_balanced_epoch29.json",
+  "head_accumulator_scale": 0.00026665400492136004,
+  "output_scale": 0.030286800116300583,
+  "threshold_bits": 18,
+  "threshold_count": 3825,
+  "threshold_min": -14592,
+  "threshold_max": 25652,
+  "confidence_thresholds": {
+    "cell": 0.96,
+    "droplet": 0.88
+  },
+  "object_codes": {
+    "cell": 105,
+    "droplet": 66
+  },
+  "stream_shape": {
+    "input_bytes": 9216,
+    "grid_points": 576,
+    "output_words": 8640,
+    "input_fifo_depth": 4096
+  },
+  "files": {
+    "detector_output_thresholds_15micro_pkg.vhd": {
+      "path": "E:\\fpga\\fpga_rtl\\generated_15micro_qnn96_roi120\\detector_output_thresholds_15micro_pkg.vhd",
+      "sha256": "4687cc0d509215bbbd3540eaa7ebda2a5eb55c1eff3b6ea08a13ac36c99ecd25"
+    },
+    "detector_output_requantizer_15micro.vhd": {
+      "path": "E:\\fpga\\fpga_rtl\\generated_15micro_qnn96_roi120\\detector_output_requantizer_15micro.vhd",
+      "sha256": "36f3f13e9ef85f0819d108d861be1f43342534986d1528027ea8096a1a637a8f"
+    },
+    "cell_droplet_15micro_qnn96_roi120_finn_uart_sparse_stream_top.vhd": {
+      "path": "E:\\fpga\\fpga_rtl\\generated_15micro_qnn96_roi120\\cell_droplet_15micro_qnn96_roi120_finn_uart_sparse_stream_top.vhd",
+      "sha256": "dfbd7e400ceda362c1b753c527c8a96c1ac2a6e27c35e519867708447e5d3e7d"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "image_size": 640,
+  "nms_iou": 0.5,
+  "warmup_frames": 8,
+  "confidence": {
+    "cell": 0.55,
+    "droplet": 0.54
+  },
+  "preprocess": {
+    "mode": "fixed_roi_grayscale_resize",
+    "content_width": 192,
+    "content_height": 192
+  },
+  "roi": {
+    "reference_width": 1280,
+    "reference_height": 800,
+    "x": 568,
+    "y": 350,
+    "width": 240,
+    "height": 240,
+    "count_line_fraction": 0.65
+  },
+  "tracking": {
+    "direction": "left_to_right",
+    "minimum_hits": 3,
+    "max_misses": 6,
+    "max_center_distance": 0.22,
+    "count_hysteresis": 0.04
+  },
+  "calibration": {
+    "parent_roi": "configs/15micro_yolo11n_roi256_v1.json",
+    "policy": "center-preserving 256-to-240 source crop for FPGA A/B validation",
+    "area_reduction_percent": 12.109375
+  }
+}

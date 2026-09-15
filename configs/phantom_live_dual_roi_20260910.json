@@ -1,0 +1,22 @@
+{
+  "calibration_status": "Straight channel above junction; user corrected flow to upward; pending droplets for validation",
+  "flow_direction": "bottom_to_top",
+  "rotate_roi_ccw_degrees": 270,
+  "counting_enabled": false,
+  "rois": {
+    "left": {"reference_width": 1280, "reference_height": 800, "x": 652, "y": 190, "width": 164, "height": 164, "line_fraction": 0.55},
+    "right": {"reference_width": 1280, "reference_height": 800, "x": 645, "y": 20, "width": 164, "height": 164, "line_fraction": 0.55}
+  },
+  "tracking": {
+    "direction": "left_to_right",
+    "minimum_hits": {"cell": 3, "droplet": 2},
+    "max_misses": {"cell": 8, "droplet": 10},
+    "max_center_distance": {"cell": 0.24, "droplet": 0.35},
+    "count_hysteresis": 0.035, "reverse_tolerance": 0.04,
+    "edge_margin": 0.04, "maximum_prediction_frames": 10
+  },
+  "cross_roi_verification": {
+    "minimum_delay_frames": 4, "maximum_delay_frames": 60,
+    "maximum_cross_axis_distance_fraction": 0.25, "preserve_order": true
+  }
+}

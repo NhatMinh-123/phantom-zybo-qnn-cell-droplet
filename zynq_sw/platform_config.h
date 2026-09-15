@@ -1,0 +1,4 @@
+#ifndef QNN_PLATFORM_CONFIG_H
+#define QNN_PLATFORM_CONFIG_H
+#define PLATFORM_ZYNQ
+#endif

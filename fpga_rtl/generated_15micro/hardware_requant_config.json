@@ -1,0 +1,32 @@
+{
+  "metadata": "E:\\fpga\\exports\\15micro_qnn_w4a6_192_v2\\tiny_detector_192x192_w4a6_rawhead.json",
+  "postprocess": "E:\\fpga\\reports\\15micro_qnn_v1\\final_postprocess_w4a6_192_v2\\postprocess_config.json",
+  "head_accumulator_scale": 0.00024744149108429925,
+  "output_scale": 0.0309394933283329,
+  "threshold_bits": 18,
+  "threshold_count": 3825,
+  "threshold_min": -16094,
+  "threshold_max": 27964,
+  "confidence_thresholds": {
+    "cell": 0.93,
+    "droplet": 0.79
+  },
+  "object_codes": {
+    "cell": 84,
+    "droplet": 43
+  },
+  "files": {
+    "detector_output_thresholds_15micro_pkg.vhd": {
+      "path": "E:\\fpga\\fpga_rtl\\generated_15micro\\detector_output_thresholds_15micro_pkg.vhd",
+      "sha256": "95647d67182392cec631e49f9e1e195293bdd3c64ec03215c28523f205e41b07"
+    },
+    "detector_output_requantizer_15micro.vhd": {
+      "path": "E:\\fpga\\fpga_rtl\\generated_15micro\\detector_output_requantizer_15micro.vhd",
+      "sha256": "36f3f13e9ef85f0819d108d861be1f43342534986d1528027ea8096a1a637a8f"
+    },
+    "cell_droplet_15micro_finn_uart_sparse_stream_top.vhd": {
+      "path": "E:\\fpga\\fpga_rtl\\generated_15micro\\cell_droplet_15micro_finn_uart_sparse_stream_top.vhd",
+      "sha256": "638ef74a68d9675850b254f5122bbc7b32d9e07e82b10ca7ca0a543a763bfd88"
+    }
+  }
+}
