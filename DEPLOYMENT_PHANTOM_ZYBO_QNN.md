@@ -105,6 +105,26 @@ MTU. The UDP protocol and FPGA firmware currently use the normal Ethernet MTU.
 
 ## 4. Measured results
 
+## 4a. Visual evidence
+
+The following figures are checked-in examples from the measured pipeline.
+
+**Full-frame camera input before detection:**
+
+![Phantom full-frame input](docs/images/phantom_full_frame.png)
+
+**Live Zybo QNN output with two ROI windows:** the green and cyan regions are
+the candidate and confirmation ROIs; the blue boxes are QNN detections returned
+through the Ethernet path.
+
+![Live Zybo QNN dual ROI result](docs/images/live_zybo_qnn_dual_roi.png)
+
+**ROI120 QNN pre-FPGA reference:** this figure shows the smaller ROI detector
+and its measured inference/pipeline timing before the same model is sent
+through the Zybo stream.
+
+![ROI120 QNN reference result](docs/images/qnn_roi120_pre_fpga.png)
+
 These are measurements from the connected hardware and current software, not a
 claim that every camera mode reaches the same rate.
 
