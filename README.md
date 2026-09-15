@@ -7,6 +7,21 @@ The current Ethernet live pipeline is documented in
 Phantom VEO 710L acquisition path, the two-stage QNN ROI detector on the Zybo
 Z7-10, measured throughput, launch commands, and troubleshooting.
 
+### Hinh minh hoa ket qua
+
+Anh full-frame tu camera Phantom truoc khi cat ROI:
+
+![Phantom VEO 710L full-frame](docs/images/phantom_full_frame.png)
+
+Ket qua QNN hai ROI chay qua Ethernet tren Zybo Z7-10. ROI 1 tao candidate,
+ROI 2 xac nhan cung object; hai ROI khong duoc cong thanh hai vat the:
+
+![Live Zybo QNN dual ROI](docs/images/live_zybo_qnn_dual_roi.png)
+
+Ket qua QNN ROI120 lam moc truoc khi dua model vao FPGA:
+
+![QNN ROI120 pre-FPGA](docs/images/qnn_roi120_pre_fpga.png)
+
 Du an gom ba moc co vai tro khac nhau:
 
 1. `YOLO11n FP32` tren PC de lam moc do chinh xac.
