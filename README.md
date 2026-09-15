@@ -22,6 +22,33 @@ Ket qua QNN ROI120 lam moc truoc khi dua model vao FPGA:
 
 ![QNN ROI120 pre-FPGA](docs/images/qnn_roi120_pre_fpga.png)
 
+### So do pipeline thuat toan
+
+```mermaid
+flowchart LR
+    A[Phantom VEO 710L] --> B[Ethernet switch]
+    B --> C[PC Phantom SDK\nfull frame 1280x800]
+    C --> D[Crop hai ROI\nrotate + resize 96x96]
+    D --> E[UDP Ethernet]
+    E --> F[Zybo Z7-10\nPS + DMA]
+    F --> G[QNN W4A6 trong FPGA PL]
+    G --> H[Detections + confidence]
+    H --> I[ROI 1 candidate]
+    I --> J[ROI 2 confirm\ntrack va dem]
+    J --> K[Overlay + report FPS]
+```
+
+### Confusion matrix
+
+Confusion matrix duoi day la ket qua test cua YOLO11n FP32 tren PC, duoc dung
+lam teacher/baseline truoc khi luong tu hoa. Day khong phai la confusion matrix
+cua QNN FPGA; ket qua QNN FPGA duoc danh gia them bang frame metrics va report
+trong cac thu muc benchmark.
+
+![Normalized confusion matrix - 15 um YOLO teacher](docs/images/confusion_matrix_15micro_teacher_normalized.png)
+
+![Raw confusion matrix - 15 um YOLO teacher](docs/images/confusion_matrix_15micro_teacher_raw.png)
+
 Du an gom ba moc co vai tro khac nhau:
 
 1. `YOLO11n FP32` tren PC de lam moc do chinh xac.
